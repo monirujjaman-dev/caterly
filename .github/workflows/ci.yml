@@ -22,7 +22,7 @@ jobs:
       backend: ${{ steps.d.outputs.backend }}
       web: ${{ steps.d.outputs.web }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: d
         run: |
           if ls backend/*.sln backend/*.slnx >/dev/null 2>&1; then echo "backend=true" >> "$GITHUB_OUTPUT"; else echo "backend=false" >> "$GITHUB_OUTPUT"; fi
@@ -37,7 +37,7 @@ jobs:
       run:
         working-directory: backend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
@@ -62,7 +62,7 @@ jobs:
       run:
         working-directory: web
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -78,7 +78,7 @@ jobs:
     name: secret-scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: gitleaks/gitleaks-action@v2
