@@ -27,8 +27,14 @@ git switch -c <type>/<scope>-<slug> origin/main   # or check out the existing PR
 ```
 Never work on `main`.
 
-## 4. Implement
-- Tests first where practical: domain rules, validation, state transitions, money calculations.
+## 4. Implement (DDD + TDD)
+- **Test-first is mandatory.** Read and follow `.claude/skills/tdd/SKILL.md` and
+  `.claude/rules/tdd.md`: test list from rule IDs, then red → green → refactor, one behavior at
+  a time. Bug fixes start with a failing reproduction test.
+- For new or changed domain behavior, model it first with `.claude/skills/domain-model/SKILL.md`.
+  Use the terms in `docs/architecture/ubiquitous-language.md` and the layer rules in
+  `.claude/rules/` (`ddd-strategic`, `domain-layer`, `application-layer`,
+  `infrastructure-layer`, `api-layer`, `web`).
 - Business rules live in Domain/Application, never only in the UI. Enforce authorization and
   `TenantId` scoping on the server for every query and command.
 - Money: `decimal`, explicit rounding, snapshot prices/allowances. Time: UTC storage,
@@ -62,5 +68,5 @@ label, edit requirement documents or accepted ADRs without being asked, read `.e
 commit secrets.
 
 ## Final report
-Summary; files changed; DB/migration changes; API changes; tests run with results; known
-limitations and open questions; branch and PR URL.
+Summary; files changed; DB/migration changes; API changes; TDD evidence (test list, red
+reasons observed); tests run with results; known limitations and open questions; branch and PR URL.

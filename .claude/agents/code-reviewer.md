@@ -26,9 +26,17 @@ full plus their callers and tests.
 4. **Data & concurrency**: transactions, unique constraints (e.g. one active selection per
    employee/date/meal period), idempotency, race conditions near cutoff, migration safety.
 5. **Audit**: required actions audited with actor, UTC time, old/new values, reason.
-6. **Tests**: changed rules covered by unit tests; integration tests for persistence, authz and
-   tenant isolation; tests actually assert the rule.
-7. **Quality**: layering (thin endpoints), N+1, pagination, CancellationToken, error handling,
+6. **Tests (TDD)**: every changed behavior has a test that would fail without it (`major` if
+   missing; a bug fix without a reproduction test is `major`); tests assert business outcomes
+   and error codes, not implementation details; boundaries covered (at cutoff, effective
+   dates, rounding); integration tests for persistence, authz and tenant isolation on real
+   PostgreSQL; the PR's TDD evidence matches the tests. Rules: `.claude/rules/tdd.md`.
+7. **DDD**: ubiquitous language used (`docs/architecture/ubiquitous-language.md`), no coined
+   business terms; invariants enforced in aggregates, not handlers/endpoints/UI; no public
+   setters or anemic `Update(dto)`; value objects instead of primitives for money/IDs/dates;
+   no cross-module table or entity access; Domain free of framework/I/O/clock calls. Rules:
+   `.claude/rules/ddd-strategic.md`, `domain-layer.md`, `application-layer.md`.
+8. **Quality**: layering (thin endpoints), N+1, pagination, CancellationToken, error handling,
    unnecessary abstractions or dependencies, dead code, naming.
 
 Optionally run the build and tests to confirm claims; report results.

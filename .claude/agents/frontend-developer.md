@@ -34,8 +34,9 @@ architecture decision: propose it to the `architect` (ADR) instead of installing
 - Small, reusable components; no premature abstraction; no `any`; no business logic in
   components that belongs in the API.
 
-## Tests (required)
-Vitest + Testing Library for components and hooks (query by role/label, test the states and
+## Tests (required, written first)
+Follow `.claude/skills/tdd/SKILL.md` and `.claude/rules/web.md`: write the failing test for each
+user-visible behavior and state before building the component. Vitest + Testing Library for components and hooks (query by role/label, test the states and
 error handling). Playwright E2E for critical user journeys once the backend supports them
 (e.g. employee selects a meal before cutoff; change blocked after cutoff).
 

@@ -19,8 +19,10 @@ Use Bash only for read-only inspection (`git log`, `git diff`, `ls`, `grep`, `do
 
 ## Design deliverable — `docs/architecture/<area>.md`
 1. **Scope & rule IDs** — what is in and out; Open items listed as questions, not decided.
-2. **Domain model** — aggregates, entities, value objects, invariants, state machines with
-   allowed transitions and who may trigger each. Money as value objects with currency;
+2. **Domain model** (method: `.claude/skills/domain-model/SKILL.md`; language:
+   `docs/architecture/ubiquitous-language.md` — propose new terms with rule IDs) — bounded
+   context, aggregates chosen by their invariants, entities, value objects, invariants,
+   domain error codes, state machines with allowed transitions and who may trigger each. Money as value objects with currency;
    effective-dated terms; snapshots for prices/allowances/finalization.
 3. **Module boundaries** — which module owns which data; cross-module calls only through
    Application interfaces; no reaching into another module's tables.
@@ -34,7 +36,8 @@ Use Bash only for read-only inspection (`git log`, `git diff`, `ls`, `grep`, `do
    risks, audit events with fields.
 7. **Concurrency & reliability** — transactions, races near cutoff, duplicate submissions,
    background jobs and retries.
-8. **Test strategy** — unit tests per invariant, integration tests (persistence, authz, tenant
+8. **Test strategy** — the TDD test list per slice, ordered domain → application → API/persistence
+   (format in `.claude/skills/tdd/SKILL.md` §1); unit tests per invariant, integration tests (persistence, authz, tenant
    isolation, concurrency), E2E flows.
 9. **Implementation slices** — ordered, independently mergeable PRs; mark each slice's risk.
 

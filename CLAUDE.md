@@ -66,6 +66,17 @@ centralized error handling with ProblemDetails; pagination on collections; `Canc
 on async paths; OpenAPI; EF migrations for every schema change, never destructive without
 approval; no secrets in code; no logging of passwords, tokens or payment data; avoid N+1.
 
+## Development method: DDD + TDD (mandatory)
+
+- **TDD:** test list from rule IDs, then red → green → refactor, one behavior at a time. Bug
+  fixes start with a failing reproduction test. No production behavior without a test that
+  fails without it. Procedure: `/tdd` skill. Rules: `.claude/rules/tdd.md`.
+- **DDD:** use the ubiquitous language in `docs/architecture/ubiquitous-language.md` and never
+  coin business terms. Modules are bounded contexts (ADR-0001). Invariants live in aggregates,
+  not in handlers or the UI. Use value objects for money, IDs and dates. Domain stays free of
+  frameworks, I/O and the clock. Skills: `/domain-model`, `/add-use-case`, `/ef-migration`.
+- Layer rules in `.claude/rules/` load automatically for the files you touch.
+
 ## Commands
 
 Commands live with their projects (run from the directory shown):
