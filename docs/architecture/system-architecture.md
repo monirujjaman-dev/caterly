@@ -136,7 +136,8 @@ call it, so every host gets the same logging, tracing, metrics and health checks
       `x-dead-letter-routing-key` = `<queue>`, and a bound queue `<queue>.dlq`;
     - quorum queues use `x-dead-letter-strategy: at-least-once` with
       `x-overflow: reject-publish`, so dead-lettered messages are not lost;
-    - `x-delivery-limit` is set explicitly (default 5, not the broker default of 20).
+    - `x-delivery-limit` is set explicitly (default 5, not the broker default of 20). It is a
+      safety net for redeliveries (for example a consumer crash), not the retry mechanism.
 - **Envelope:** both headers and body carry:
   - `messageId` (UUID v7), `type`, `version`;
   - `tenantId`, `occurredAtUtc`;
@@ -151,7 +152,15 @@ call it, so every host gets the same logging, tracing, metrics and health checks
   - Delivery is **at least once**.
 - **Inbox:** a consumer records `(consumer, messageId)` with a unique constraint in the same
   transaction as its effect. A duplicate message is acknowledged with no effect.
-- **Retries:** bounded retries with delay (per-queue TTL retry queues), then the DLQ.
+- **Retries (consumer-driven, delayed):**
+  1. When a handler fails, the consumer republishes the message to `<queue>.retry.<n>`. Those
+     are queues with a fixed message TTL (for example 10 s, 1 min and 5 min), whose
+     dead-letter target is the main queue. The consumer increments an `x-caterly-attempt`
+     header and then acks the original.
+  2. After the last attempt (default 3), the consumer publishes the message to `<queue>.dlq`
+     with the error details in headers, then acks.
+  3. A plain `reject` without requeue (an unparseable message, or a delivery limit reached
+     after crashes) dead-letters straight to `<queue>.dlq` through `caterly.dlx`.
   - A DLQ depth above 0 triggers an alert.
   - Replay is a manual, audited operation.
 - **Versioning:** only additive changes within a major version. A breaking change publishes

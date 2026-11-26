@@ -40,8 +40,15 @@ mediator libraries.
 - Consumers enforce tenancy from the envelope's `TenantId` and load data through the normal
   tenant-scoped repositories. They never trust IDs without scoping them.
 - Handle out-of-order delivery. Compare versions or timestamps; do not assume ordering.
-- Failures are retried a bounded number of times with backoff, then the message goes to the
-  DLQ. Do not swallow exceptions to acknowledge a poison message silently.
+- Retries are consumer-driven and delayed (system-architecture §5):
+  - On failure, republish to `<queue>.retry.<n>` with the `x-caterly-attempt` header
+    incremented, then ack.
+  - After the last attempt, publish to `<queue>.dlq` with the error details, then ack.
+  - Reject without requeue only for messages that can never succeed (unparseable or an
+    unknown version); those dead-letter straight to the DLQ.
+  - The quorum `x-delivery-limit` is only a crash safety net.
+  - Never requeue in a tight loop, and do not swallow exceptions to acknowledge a poison
+    message silently.
 - Each consumer owns its own queue: `caterly.<consumer-module>.<purpose>`. Exchange:
   `caterly.<publisher-module>`. Routing key: `<module>.<event>.v<n>`.
 
