@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-27T00:00:00Z",
+  "title": "Design System: Caterly",
+  "extensions": {
+    "colorMeta": {
+      "pass-green": { "role": "primary", "displayName": "Pass Green", "canonical": "#166534", "tonalRamp": ["#052e16", "#14532d", "#166534", "#15803d", "#22c55e", "#86efac", "#dcfce7", "#f0fdf4"] },
+      "pass-green-deep": { "role": "primary", "displayName": "Pass Green Deep", "canonical": "#14532d", "tonalRamp": ["#052e16", "#0b3d20", "#14532d", "#166534", "#15803d", "#4ade80", "#bbf7d0", "#f0fdf4"] },
+      "pass-green-wash": { "role": "primary", "displayName": "Pass Green Wash", "canonical": "#f0fdf4" },
+      "pass-green-tint": { "role": "primary", "displayName": "Pass Green Tint", "canonical": "#dcfce7" },
+      "saffron-knob": { "role": "secondary", "displayName": "Saffron Knob", "canonical": "#f2a93b", "tonalRamp": ["#451a03", "#78350f", "#b45309", "#d97706", "#f2a93b", "#f8c97a", "#fbe0b0", "#fdf0dc"] },
+      "saffron-wash": { "role": "secondary", "displayName": "Saffron Wash", "canonical": "#fdf0dc" },
+      "burnt-saffron": { "role": "secondary", "displayName": "Burnt Saffron", "canonical": "#b45309" },
+      "plate-white": { "role": "neutral", "displayName": "Plate White", "canonical": "#ffffff" },
+      "counter-mist": { "role": "neutral", "displayName": "Counter Mist", "canonical": "#f9fafb" },
+      "steel-tint": { "role": "neutral", "displayName": "Steel Tint", "canonical": "#f3f4f6" },
+      "divider-gray": { "role": "neutral", "displayName": "Divider Gray", "canonical": "#e5e7eb" },
+      "control-gray": { "role": "neutral", "displayName": "Control Gray", "canonical": "#6b7280" },
+      "muted-ink": { "role": "neutral", "displayName": "Muted Ink", "canonical": "#4b5563" },
+      "slate-ink": { "role": "neutral", "displayName": "Slate Ink", "canonical": "#374151" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#111827", "tonalRamp": ["#111827", "#1f2937", "#374151", "#4b5563", "#6b7280", "#e5e7eb", "#f3f4f6", "#f9fafb"] },
+      "focus-blue": { "role": "status", "displayName": "Focus Blue", "canonical": "#1e40af" },
+      "info-tint": { "role": "status", "displayName": "Info Tint", "canonical": "#dbeafe" },
+      "warning-ink": { "role": "status", "displayName": "Warning Ink", "canonical": "#92400e" },
+      "warning-tint": { "role": "status", "displayName": "Warning Tint", "canonical": "#fef3c7" },
+      "danger-red": { "role": "status", "displayName": "Danger Red", "canonical": "#b91c1c" },
+      "danger-tint": { "role": "status", "displayName": "Danger Tint", "canonical": "#fee2e2" }
+    },
+    "typographyMeta": {
+      "page-title": { "displayName": "Page title", "purpose": "One per screen; 24 px on mobile." },
+      "section-title": { "displayName": "Section title", "purpose": "Major groups on a page." },
+      "card-title": { "displayName": "Card title", "purpose": "Card and dialog titles." },
+      "amount": { "displayName": "Amount", "purpose": "Key money and quantity figures, tabular numerals." },
+      "body": { "displayName": "Body", "purpose": "Running text and form inputs (16 px minimum)." },
+      "label": { "displayName": "Label", "purpose": "Field labels and button text." },
+      "meta": { "displayName": "Meta", "purpose": "Table cells, timestamps, hints." },
+      "badge": { "displayName": "Badge", "purpose": "Status badges only." },
+      "mono": { "displayName": "Mono", "purpose": "References and IDs only." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px rgb(17 24 39 / 0.06)", "purpose": "Resting card on Counter Mist." },
+      { "name": "shadow-md", "value": "0 4px 12px rgb(17 24 39 / 0.08)", "purpose": "Menus, popovers, dialogs, side sheets." }
+    ],
+    "motion": [
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "All animation and transition durations collapse under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "768px" },
+      { "name": "desktop", "value": "1024px" },
+      { "name": "wide", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single primary action on a screen.",
+      "html": "<button class=\"ds-btn-primary\">Save selection</button>",
+      "css": ".ds-btn-primary { min-height: var(--target-min, 2.75rem); padding: 0.625rem 1rem; background: var(--color-action, #166534); color: var(--color-text-inverse, #fff); border: 1px solid transparent; border-radius: var(--radius-md, 0.5rem); font: 500 1rem/1.5 var(--font-sans, system-ui, sans-serif); cursor: pointer; transition: background-color 120ms ease-out; } .ds-btn-primary:hover, .ds-btn-primary:active { background: var(--color-action-hover, #14532d); } .ds-btn-primary:focus-visible { outline: 3px solid var(--color-focus, #1e40af); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined alternative action.",
+      "html": "<button class=\"ds-btn-secondary\">View history</button>",
+      "css": ".ds-btn-secondary { min-height: var(--target-min, 2.75rem); padding: 0.625rem 1rem; background: var(--color-surface, #fff); color: var(--color-action, #166534); border: 1px solid var(--color-action, #166534); border-radius: var(--radius-md, 0.5rem); font: 500 1rem/1.5 var(--font-sans, system-ui, sans-serif); cursor: pointer; transition: background-color 120ms ease-out; } .ds-btn-secondary:hover { background: var(--color-action-subtle, #f0fdf4); color: var(--color-action-hover, #14532d); } .ds-btn-secondary:focus-visible { outline: 3px solid var(--color-focus, #1e40af); outline-offset: 2px; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive or financial confirmation; label names the consequence.",
+      "html": "<button class=\"ds-btn-danger\">Cancel 12 selections</button>",
+      "css": ".ds-btn-danger { min-height: var(--target-min, 2.75rem); padding: 0.625rem 1rem; background: var(--color-danger-text, #b91c1c); color: #fff; border: 1px solid transparent; border-radius: var(--radius-md, 0.5rem); font: 500 1rem/1.5 var(--font-sans, system-ui, sans-serif); cursor: pointer; } .ds-btn-danger:focus-visible { outline: 3px solid var(--color-focus, #1e40af); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Visible label, hint, and 3 px focus ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field__label\">Employee ID</span><input class=\"ds-field__input\" value=\"EMP-0412\" aria-describedby=\"ds-hint\"><span class=\"ds-field__hint\" id=\"ds-hint\">As shown on the staff card.</span></label>",
+      "css": ".ds-field { display: grid; gap: 0.25rem; font-family: var(--font-sans, system-ui, sans-serif); color: var(--color-text, #111827); } .ds-field__label { font-weight: 500; } .ds-field__input { min-height: var(--target-min, 2.75rem); padding: 0.625rem 0.75rem; font: 400 1rem/1.5 inherit; color: inherit; background: #fff; border: 1px solid var(--color-border-input, #6b7280); border-radius: var(--radius-md, 0.5rem); } .ds-field__input:focus-visible { outline: 3px solid var(--color-focus, #1e40af); outline-offset: 2px; } .ds-field__hint { font-size: 0.875rem; color: var(--color-text-muted, #4b5563); }"
+    },
+    {
+      "name": "Status Badges",
+      "kind": "chip",
+      "refersTo": "badge-success",
+      "description": "Text plus status pair; order and payment status are separate badges.",
+      "html": "<span class=\"ds-badges\"><span class=\"ds-badge ds-badge--success\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>Delivered</span><span class=\"ds-badge ds-badge--warning\">Payment pending</span><span class=\"ds-badge ds-badge--danger\">Refund failed</span><span class=\"ds-badge ds-badge--neutral\">Locked</span></span>",
+      "css": ".ds-badges { display: inline-flex; gap: 0.5rem; flex-wrap: wrap; } .ds-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: var(--radius-sm, 0.25rem); font: 500 0.75rem/1.25 var(--font-sans, system-ui, sans-serif); } .ds-badge--success { background: var(--color-success-bg, #dcfce7); color: var(--color-success-text, #166534); } .ds-badge--warning { background: var(--color-warning-bg, #fef3c7); color: var(--color-warning-text, #92400e); } .ds-badge--danger { background: var(--color-danger-bg, #fee2e2); color: var(--color-danger-text, #b91c1c); } .ds-badge--neutral { background: var(--color-neutral-bg, #f3f4f6); color: var(--color-neutral-text, #374151); }"
+    },
+    {
+      "name": "Summary Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Grouped summary with tabular amounts and an absolute cutoff time.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card__title\">Lunch · Thu 27 Nov</h3><p class=\"ds-card__meta\">Order by 10:00 AM, Thu 27 Nov</p><dl class=\"ds-card__rows\"><dt>Selected</dt><dd>142</dd><dt>Company share</dt><dd>৳ 21,300.00</dd><dt>Employee share</dt><dd>৳ 7,100.00</dd></dl></article>",
+      "css": ".ds-card { max-width: 22rem; padding: 1.5rem; background: #fff; border: 1px solid var(--color-border, #e5e7eb); border-radius: var(--radius-lg, 0.75rem); box-shadow: 0 1px 2px rgb(17 24 39 / 0.06); font-family: var(--font-sans, system-ui, sans-serif); color: var(--color-text, #111827); } .ds-card__title { margin: 0 0 0.25rem; font-size: 1.25rem; font-weight: 600; line-height: 1.25; } .ds-card__meta { margin: 0 0 1rem; font-size: 0.875rem; color: var(--color-accent-text, #b45309); } .ds-card__rows { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1rem; margin: 0; font-size: 0.875rem; } .ds-card__rows dt { color: var(--color-text-muted, #4b5563); } .ds-card__rows dd { margin: 0; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Side Navigation",
+      "kind": "nav",
+      "description": "Desktop left rail; active item in Pass Green on Pass Green Wash.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a class=\"ds-nav__item\" href=\"#\">Services</a><a class=\"ds-nav__item ds-nav__item--active\" href=\"#\" aria-current=\"page\">Meal calendar</a><a class=\"ds-nav__item\" href=\"#\">Finalization</a><a class=\"ds-nav__item\" href=\"#\">Billing</a></nav>",
+      "css": ".ds-nav { display: grid; gap: 0.25rem; width: 14rem; padding: 0.75rem; background: var(--color-surface-muted, #f9fafb); border-right: 1px solid var(--color-border, #e5e7eb); font-family: var(--font-sans, system-ui, sans-serif); } .ds-nav__item { display: flex; align-items: center; min-height: var(--target-min, 2.75rem); padding: 0 0.75rem; border-radius: var(--radius-md, 0.5rem); color: var(--color-text-muted, #4b5563); font-weight: 500; text-decoration: none; } .ds-nav__item:hover { background: var(--color-neutral-bg, #f3f4f6); color: var(--color-text, #111827); } .ds-nav__item--active { background: var(--color-action-subtle, #f0fdf4); color: var(--color-action, #166534); } .ds-nav__item:focus-visible { outline: 3px solid var(--color-focus, #1e40af); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kitchen Pass",
+    "overview": "The pass is the counter between the kitchen and the floor. Every plate is checked there before it leaves. Caterly's interface plays the same role for a catering business: selections, quantities and money arrive from many hands and must be clear, ordered and final before they go out. Screens read like a well-run pass. Each item sits in its place, its status is stated in words, and the one thing that needs attention stands out because everything else is quiet.\n\nThe world is calm and dependable. Surfaces are plate white on a faint counter-mist ground, with fine gray dividers and ink-dark text. Pass Green, the color of the brand tile, means confirmed, go, act here: primary actions, links, success. Saffron, the knob on the cloche, is used sparingly. It marks the brand and the moment that needs a human eye. It is never an alarm, and it is never filled behind white text. Density follows the role: operators and finance get compact tables and multi-column desktop layouts, while employees get one column on a phone with the primary action anchored at the bottom.\n\nExpression comes from precision, not ornament: tabular numbers that line up, absolute cutoff times, status badges that always carry text, and a 3 px focus ring you cannot miss.",
+    "keyCharacteristics": [
+      "Quiet neutral surfaces, with green reserved for action and confirmation.",
+      "Saffron as a rare brand and attention accent, never as a status or a button fill.",
+      "A system font stack with Bengali fallbacks. No web-font download.",
+      "Flat by default. Borders define structure, and shadows appear only on cards and floating layers.",
+      "Soft corners: 8 px on controls, 12 px on containers.",
+      "Status is always text plus color (plus an icon where there is space). Order and payment status are two badges."
+    ],
+    "rules": [
+      { "name": "The One Go Color Rule", "body": "Pass Green is the only color for primary actions and confirmation. If two things on a screen are green-filled, one of them is wrong.", "section": "colors" },
+      { "name": "The Saffron Is Seasoning Rule", "body": "Saffron covers well under 5% of any screen. It is never a button fill, never sits behind white text, and never means a status. Warning has its own amber pair.", "section": "colors" },
+      { "name": "The Semantic Token Rule", "body": "Components use semantic tokens (--color-action, --color-text-muted), never palette tokens (--green-700).", "section": "colors" },
+      { "name": "The Columns Line Up Rule", "body": "Every amount, quantity and time uses font-variant-numeric: tabular-nums. Right-align numeric table columns.", "section": "typography" },
+      { "name": "The 12 px Is For Badges Rule", "body": "--text-xs appears only inside badges. Nothing else readable goes below 14 px.", "section": "typography" },
+      { "name": "The Absolute Time Rule", "body": "Cutoffs and service windows always appear as absolute local times in the service timezone (\"Order by 10:00 AM, Thu 27 Nov\"), never as only \"in 2 hours\".", "section": "layout" },
+      { "name": "The Borders In Tables Rule", "body": "Dense tables and lists use borders and row dividers, never shadows. A shadow means \"this floats\", not \"this is important\".", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Pass Green (#166534) for the single primary action on a screen, and Pass Green Deep (#14532d) for its hover state.",
+      "Do pair every status color with a text label, and add an icon where space allows.",
+      "Do use tabular numerals for every amount, quantity and time.",
+      "Do show cutoffs as absolute local times in Asia/Dhaka unless the service says otherwise.",
+      "Do keep touch targets at least 44 px and input text at least 16 px.",
+      "Do use the inverse logo on green or dark surfaces, keep ¼-width clear space around the mark, and never show it smaller than 24 px.",
+      "Do name the consequence in destructive or financial dialogs (\"Cancel 12 selections\")."
+    ],
+    "donts": [
+      "Don't put white text on Saffron Knob (#f2a93b), and don't use saffron as a button fill or a status color.",
+      "Don't use Divider Gray (#e5e7eb) as the only boundary of an input or control.",
+      "Don't merge order status and payment status into one badge.",
+      "Don't add a web font, or bake text into images. Both break Bangla support.",
+      "Don't use shadows to add emphasis in tables and lists.",
+      "Don't build dark-mode variants for the MVP.",
+      "Don't show prices, shares or totals the client calculated as if they were final."
+    ]
+  }
+}
