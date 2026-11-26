@@ -1,0 +1,100 @@
+/*
+ * Caterly design tokens. Source of truth: docs/ux/design-system.md.
+ * Use semantic tokens (--color-text, --color-action) in components, not palette tokens.
+ */
+:root {
+  /* Palette */
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-700: #166534;
+  --green-800: #14532d;
+  --saffron-100: #fdf0dc;
+  --saffron-400: #f2a93b;
+  --saffron-700: #b45309;
+  --gray-0: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --red-100: #fee2e2;
+  --red-700: #b91c1c;
+  --amber-100: #fef3c7;
+  --amber-800: #92400e;
+  --blue-100: #dbeafe;
+  --blue-800: #1e40af;
+
+  /* Semantic colors (contrast checked against WCAG 2.2 AA) */
+  --color-bg: var(--gray-0);
+  --color-surface: var(--gray-0);
+  --color-surface-muted: var(--gray-50);
+  --color-text: var(--gray-900); /* 17.7:1 */
+  --color-text-muted: var(--gray-600); /* 7.6:1 */
+  --color-text-subtle: var(--gray-500); /* 4.8:1 */
+  --color-text-inverse: var(--gray-0);
+  --color-border: var(--gray-200); /* decorative dividers only */
+  --color-border-input: var(--gray-500); /* 4.8:1, meets 3:1 for UI */
+  --color-action: var(--green-700); /* white text 7.1:1 */
+  --color-action-hover: var(--green-800);
+  --color-action-subtle: var(--green-50);
+  --color-link: var(--green-700);
+  --color-accent: var(--saffron-400); /* decorative / dark text only */
+  --color-accent-text: var(--saffron-700); /* 5.0:1 */
+  --color-focus: var(--blue-800);
+
+  --color-success-text: var(--green-700);
+  --color-success-bg: var(--green-100);
+  --color-warning-text: var(--amber-800);
+  --color-warning-bg: var(--amber-100);
+  --color-danger-text: var(--red-700);
+  --color-danger-bg: var(--red-100);
+  --color-info-text: var(--blue-800);
+  --color-info-bg: var(--blue-100);
+  --color-neutral-text: var(--gray-700);
+  --color-neutral-bg: var(--gray-100);
+
+  /* Typography — system stack, includes Bangla-capable fallbacks */
+  --font-sans: Inter, 'Segoe UI', Roboto, 'Noto Sans', 'Noto Sans Bengali', 'Hind Siliguri',
+    system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing (4 px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Shape & elevation */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px rgb(17 24 39 / 0.06);
+  --shadow-md: 0 4px 12px rgb(17 24 39 / 0.08);
+
+  /* Layout */
+  --container-max: 80rem;
+  --target-min: 2.75rem; /* 44 px touch target (exceeds WCAG 2.2 24 px minimum) */
+  --header-height: 3.5rem;
+}
