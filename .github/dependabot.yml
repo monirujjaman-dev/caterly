@@ -1,0 +1,7 @@
+version: 2
+# Add nuget (/backend) and npm (/web) entries in the PR that scaffolds those projects.
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    commit-message: { prefix: ci }

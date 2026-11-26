@@ -1,0 +1,6 @@
+# Product owner owns everything; high-risk areas listed explicitly for visibility.
+*                     @monirujjaman-dev
+/docs/requirements/   @monirujjaman-dev
+/docs/adr/            @monirujjaman-dev
+/.github/             @monirujjaman-dev
+/.claude/             @monirujjaman-dev

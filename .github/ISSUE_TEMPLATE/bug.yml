@@ -1,0 +1,27 @@
+name: Bug
+description: Something behaves differently from the approved rules
+labels: [type:bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened and what was expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: rules
+    attributes:
+      label: Related rule IDs
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options: [Financial / billing, Security / tenant data, Operational, Cosmetic]
+    validations:
+      required: true

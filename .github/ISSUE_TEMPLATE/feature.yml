@@ -1,0 +1,27 @@
+name: Feature / story
+description: A unit of work for the agent pipeline (/ship <issue>)
+labels: [type:feature]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      placeholder: As a corporate administrator, I want … so that …
+    validations:
+      required: true
+  - type: input
+    id: rules
+    attributes:
+      label: Business rule IDs
+      placeholder: CMD-027, CMD-028, SEL-010
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- Given … when … then …"
+    validations:
+      required: true
+  - type: textarea
+    id: open
+    attributes:
+      label: Open questions / out of scope
