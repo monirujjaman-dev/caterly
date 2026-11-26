@@ -46,7 +46,7 @@ jobs:
       - run: dotnet format --verify-no-changes --no-restore
       # Integration tests use Testcontainers (Docker is available on ubuntu runners).
       - run: dotnet test --no-build -c Release --logger "trx" --results-directory TestResults
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: backend-test-results
