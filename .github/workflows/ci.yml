@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
       - id: d
         run: |
-          if ls backend/*.sln backend/*.slnx >/dev/null 2>&1; then echo "backend=true" >> "$GITHUB_OUTPUT"; else echo "backend=false" >> "$GITHUB_OUTPUT"; fi
+          if compgen -G "backend/*.sln" >/dev/null || compgen -G "backend/*.slnx" >/dev/null; then echo "backend=true" >> "$GITHUB_OUTPUT"; else echo "backend=false" >> "$GITHUB_OUTPUT"; fi
           if [ -f web/package.json ]; then echo "web=true" >> "$GITHUB_OUTPUT"; else echo "web=false" >> "$GITHUB_OUTPUT"; fi
 
   backend:
