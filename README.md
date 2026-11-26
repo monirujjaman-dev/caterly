@@ -7,6 +7,7 @@ customer ordering), initial market Bangladesh.
 - Architecture decisions: [`docs/adr/`](docs/adr/)
 - Git workflow: [`docs/engineering/git-workflow.md`](docs/engineering/git-workflow.md)
 - Agent workflow (developer → code review → PR review → merge): [`docs/engineering/agent-workflow.md`](docs/engineering/agent-workflow.md)
+- Local setup: [`docs/engineering/local-setup.md`](docs/engineering/local-setup.md)
 - Agent instructions: [`CLAUDE.md`](CLAUDE.md)
 - Build, test and run commands: [`docs/engineering/commands.md`](docs/engineering/commands.md)
 

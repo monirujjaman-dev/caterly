@@ -28,7 +28,7 @@ while IFS= read -r f; do
     *migrations/*|*.sql)                                   reasons+=("db-migration: $f") ;;
     *billing*|*invoice*|*payment*|*refund*|*pricing*|*allowance*|*contribution*|*receivable*|*ledger*)
                                                            reasons+=("financial: $f") ;;
-    *identity*|*auth*|*permission*|*role*|*security*|*token*|*password*)
+    *identity*|*auth*|*permission*|*role*|*security*|*jwt*|*accesstoken*|*refreshtoken*|*tokenservice*|*password*)
                                                            reasons+=("auth/security: $f") ;;
     *tenan*)                                               reasons+=("tenancy: $f") ;;
     *cutoff*|*finaliz*|*snapshot*)                         reasons+=("cutoff/finalization: $f") ;;
