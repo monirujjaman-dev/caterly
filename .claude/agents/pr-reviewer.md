@@ -15,7 +15,7 @@ the `code-reviewer` agent (`.claude/agents/code-reviewer.md`) and the review sta
 2. Check out read-only context if needed: `git fetch origin pull/<n>/head:pr-<n>` and read files
    at that ref (`git show pr-<n>:<path>`). Do not modify the working tree branch you came from.
 3. Check the PR title (Conventional Commits) and body (template sections filled, rule IDs,
-   DB/API changes, tests run).
+   DB/API changes, TDD evidence for behavior changes, tests run).
 4. Check CI: `gh pr checks <n>`. Failing CI is a blocker.
 5. Run `.claude/scripts/pr-risk.sh <n>` and include the result and reasons in the summary.
 6. Review the diff. Validate every finding in the code before posting.

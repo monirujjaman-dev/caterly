@@ -43,7 +43,15 @@ final report). Your scope is `backend/` (and `docs/` updates for what you change
 - Async with `CancellationToken` end to end. Never log secrets, tokens or payment data.
 - New NuGet package → justify in the PR; framework-level additions need an architect ADR.
 
-## Tests (required)
+## DDD + TDD workflow
+For each use case, follow `.claude/skills/add-use-case/SKILL.md` (inside-out: domain →
+application → persistence → endpoint, each step starting with a failing test per
+`.claude/skills/tdd/SKILL.md`). Model new behavior with `.claude/skills/domain-model/SKILL.md`
+first; schema changes go through `.claude/skills/ef-migration/SKILL.md`. Layer conventions are in
+`.claude/rules/{ddd-strategic,domain-layer,application-layer,infrastructure-layer,api-layer}.md`
+— read the ones for the layers you touch before editing.
+
+## Tests (required, written first)
 Unit tests for every invariant, calculation and state transition (including boundary cases:
 exactly at cutoff, zero/rounding amounts, inactive employees). Integration tests for endpoints,
 authorization, **cross-tenant access attempts**, uniqueness/concurrency, and migrations once

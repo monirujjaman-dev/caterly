@@ -28,6 +28,25 @@ high-risk merges.
 | Small fix, no design/UX need | `developer` |
 | Always | `code-reviewer` → `pr-reviewer` → CI → `pr-merger` |
 
+## Development method: DDD + TDD
+
+All implementation is domain-driven and test-first. The agent-loaded guidance lives in
+`.claude/`. Agents read it by path.
+
+| Kind | File | Loaded |
+|---|---|---|
+| Rule | `.claude/rules/tdd.md` | Always |
+| Rule | `.claude/rules/ddd-strategic.md` (language, bounded contexts, layout) | `backend/**`, `docs/architecture/**`, `docs/adr/**` |
+| Rule | `.claude/rules/domain-layer.md`, `application-layer.md`, `infrastructure-layer.md`, `api-layer.md` | That layer's source and tests |
+| Rule | `.claude/rules/web.md` | `web/**` |
+| Skill | `.claude/skills/tdd/` | Red → green → refactor procedure and PR evidence |
+| Skill | `.claude/skills/domain-model/` | Rule IDs → language, context, aggregates, errors, test list |
+| Skill | `.claude/skills/add-use-case/` | Inside-out backend slice: domain → handler → persistence → endpoint |
+| Skill | `.claude/skills/ef-migration/` | Safe migration generation and SQL review |
+| Glossary | `docs/architecture/ubiquitous-language.md` | Terms used in code, API, UI |
+
+Reviewers treat a behavior change without a test that fails without it as **major**.
+
 ## Pipeline (`/ship`)
 
 ```

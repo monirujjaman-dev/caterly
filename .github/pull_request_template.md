@@ -13,6 +13,14 @@
 - **Authorization / tenancy:** <how access and TenantId scoping are enforced>
 - **Audit:** none | <actions audited>
 
+## TDD evidence
+
+<!-- Required for behavior changes (.claude/rules/tdd.md). Exempt files (config/scaffold/docs): say why. -->
+
+| Rule | Test | Red reason observed |
+|---|---|---|
+| | | |
+
 ## Verification
 
 | Check | Command | Result |
