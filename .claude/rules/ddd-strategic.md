@@ -41,5 +41,5 @@ tests/Caterly.<Layer>.<Kind>Tests/<Module>/   mirrors the source layout
 ```
 
 ## Forbidden without an approved ADR
-MediatR or any CQRS/mediator library, message brokers, event sourcing, microservices, generic
+MediatR or any CQRS/mediator library, message brokers other than RabbitMQ (ADR-0003), event sourcing, microservices, generic
 repository frameworks, AutoMapper-style mappers. Use plain handler classes and explicit mapping.

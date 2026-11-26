@@ -12,8 +12,11 @@ user; do not continue on assumptions.
 
 1. **Triage** — decide which stages apply (see the routing table in
    `docs/engineering/agent-workflow.md`):
-   - Needs design? New module/entity/schema, new or changed API, cross-module flow, integration,
-     or anything touching tenancy, money, cutoff/finalization or audit → yes.
+   - Needs design? Apply `.claude/rules/design-first.md`. A **full design** (architect) is
+     needed for a new module/entity/schema, a new or changed API, a cross-module flow, an
+     integration event, a background job, a cache entry, an auth change, or anything touching
+     tenancy, money, cutoff/finalization or audit. Otherwise the implementer writes a
+     **design note** in the plan. Design always comes before code.
    - Needs UX? Any new screen, flow, or significant UI change → yes.
    - Which code areas? `backend/`, `web/`, or both. Small cross-stack fixes with no design or UX
      need may go to the generalist `developer` agent instead of the specialists.

@@ -17,6 +17,21 @@ full plus their callers and tests.
 ## Review checklist
 1. **Business correctness** against `docs/requirements/` (cite `CMD-…`/requirement IDs) and
    accepted ADRs. Flag any invented policy or silently chosen interpretation of an Open item.
+   **Design first** (`.claude/rules/design-first.md`): a change that needs a full design
+   without an approved one, or that departs from its design, is a **blocker**. A missing
+   design note is a **major**.
+   **Platform rules:** while ADR-0004 is Proposed, code that implements its patterns
+   (packages, hosts, schemas) is a **blocker** until the owner accepts it. A design that
+   follows them is fine.
+   - any new dependency that is not free/OSS or has no verified license is a **blocker**
+     (`dependencies.md`);
+   - a direct RabbitMQ publish, a non-idempotent consumer, or a missing outbox is a **major**
+     (`messaging.md`);
+   - a cached value used for a decision, or a cache key without the tenant, is a **blocker**
+     (`caching.md`);
+   - tokens or PII in logs or span attributes, or a high-cardinality metric label, is a
+     **blocker** (`observability.md`);
+   - an auth flow or claim that departs from `identity.md` is a **blocker**.
 2. **Security & tenancy**: server-side authz on every endpoint/handler; `TenantId` scoping on
    every query and command; corporate admin limited to own account/locations; IDOR; input
    validation; secrets; sensitive data in logs.
