@@ -54,7 +54,7 @@ PostgreSQL, React + TypeScript web, responsive (no native apps for MVP).
 ```
 backend/   Caterly.slnx, src/Caterly.{Domain,Application,Infrastructure,Api}, tests/
 web/       React + TypeScript app
-docs/      requirements/, adr/, engineering/
+docs/      requirements/, adr/, engineering/, architecture/ (architect designs), ux/ (UX specs)
 ```
 
 Until code exists, the first feature PR that scaffolds a project must follow the ADR and keep it
@@ -95,7 +95,11 @@ Full pipeline and merge gate: `docs/engineering/agent-workflow.md`.
 | Task | Use |
 |---|---|
 | Implement a feature/fix end to end | `/ship <issue # or description>` |
-| Just implement on a branch | `developer` agent |
+| Design a module, schema, API or cross-module flow; draft ADRs | `architect` agent |
+| Design a screen or flow (UX spec, wireframes, states) | `ui-ux-designer` agent |
+| Implement backend (`backend/`) | `backend-developer` agent |
+| Implement web UI (`web/`) | `frontend-developer` agent |
+| Small cross-stack fix with no design/UX need | `developer` agent |
 | Review local changes before a PR | `code-reviewer` agent |
 | Review a GitHub PR | `/review-pr <n>` → `pr-reviewer` agent |
 | Merge a reviewed PR | `/merge-pr <n>` → `pr-merger` agent |
