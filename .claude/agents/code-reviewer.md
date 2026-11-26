@@ -20,7 +20,9 @@ full plus their callers and tests.
    **Design first** (`.claude/rules/design-first.md`): a change that needs a full design
    without an approved one, or that departs from its design, is a **blocker**. A missing
    design note is a **major**.
-   **Platform rules:**
+   **Platform rules:** while ADR-0004 is Proposed, code that implements its patterns
+   (packages, hosts, schemas) is a **blocker** until the owner accepts it. A design that
+   follows them is fine.
    - any new dependency that is not free/OSS or has no verified license is a **blocker**
      (`dependencies.md`);
    - a direct RabbitMQ publish, a non-idempotent consumer, or a missing outbox is a **major**

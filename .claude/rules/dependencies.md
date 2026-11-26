@@ -13,14 +13,16 @@ Product-owner constraint (ADR-0003): **no paid tools, services or packages.**
   - MediatR v13+, AutoMapper v15+, FluentAssertions v8+;
   - Duende IdentityServer;
   - Hangfire Pro;
-  - Seq (beyond its free tier);
+  - Seq (its free tier is limited);
   - Application Insights, Datadog, New Relic;
-  - Elastic stack.
-  - A free older major version of a now-commercial library is not allowed either; it
-    stops receiving fixes.
+  - Elastic stack (not chosen; its AGPL option exists, but it is heavier than the chosen stack).
+  - Do not adopt the last free major version of a library that has gone commercial (for
+    example MassTransit v8, maintained only until the end of 2026). Its fixes end soon.
 - Prefer what is already in the inventory (`docs/architecture/system-architecture.md` §11),
   then a Microsoft or BCL feature, then a new package. A new framework-level package (anything
   that shapes the architecture) needs an ADR.
+- No prerelease packages unless the owner approves one by name (for example the prerelease
+  StackExchange.Redis OpenTelemetry instrumentation).
 - Versions are pinned: NuGet in `backend/Directory.Packages.props`, npm through the exact
   versions in `package.json` plus the lockfile, and container images by version tag (never
   `latest`).

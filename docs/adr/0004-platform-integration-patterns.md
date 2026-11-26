@@ -13,7 +13,7 @@ and its main trade-off.
   them to RabbitMQ using the official `RabbitMQ.Client` package. Consumers deduplicate through
   a `messaging.inbox` table.
 - **Alternatives:**
-  - MassTransit: v9+ is commercial, and v8 is end of life.
+  - MassTransit: v9+ is commercial; v8 is maintained only until the end of 2026.
   - NServiceBus: commercial.
   - Wolverine: MIT licensed, but it is a mediator/CQRS framework that `ddd-strategic.md` forbids.
   - Publish directly with no outbox: this loses events if the process crashes after commit.
@@ -36,6 +36,8 @@ and its main trade-off.
   - Hangfire: the core is LGPL, but useful features are in the paid Pro version.
 - **Trade-off:** less built-in tooling, but no new framework, and scheduled work is
   transactional with our data.
+- **Note:** when finalization runs (its trigger and due time) is an owner decision
+  (system-architecture §12, item 8). This ADR chooses only the mechanism.
 - **Note:** cutoff enforcement never depends on a job. Every selection command compares the
   current time with the cutoff on the server (CMD-038).
 
@@ -84,6 +86,8 @@ and its main trade-off.
   L2 through `StackExchange.Redis`. Cached data is read-only: published menus, service
   configuration and permission scope.
 - **Never cached for decisions:** capacity, cutoff state, balances.
+- **No L1 backplane:** L1 expiry ≤ 30 s, and access-affecting entries (permission scope)
+  are Redis-only with L1 disabled.
 
 ## D8. Database organization: one PostgreSQL database, one schema per module
 - **Decision:** Each ADR-0001 module gets its own schema (`selection`, `billing`, …), plus

@@ -1,6 +1,7 @@
 # ADR-0001: Technology stack
 
 - **Status:** Accepted (core stack) — product owner, 2026-11-26
+- **Amended by:** ADR-0003 (RabbitMQ allowed as the message broker)
 - **Scope:** Whole repository
 
 ## Context

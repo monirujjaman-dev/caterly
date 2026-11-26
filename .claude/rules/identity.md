@@ -6,6 +6,10 @@ paths:
 
 # Identity and access: OAuth 2.0 / OIDC with OpenIddict
 
+> **Status:** the patterns below follow ADR-0004 D5–D6, which is **Proposed**. Until the owner
+> accepts it, they bind designs only. Implementing them (packages, hosts, schemas) waits for
+> acceptance (`design-first.md`). If the owner changes a decision, this rule changes with it.
+
 Design: `docs/architecture/system-architecture.md` §7, ADR-0004 D5–D6. Any change here is
 **high risk** and needs an approved design.
 
@@ -43,6 +47,7 @@ Design: `docs/architecture/system-architecture.md` §7, ADR-0004 D5–D6. Any ch
 - **Tests (written first):**
   - 401 without a token or cookie, 403 for the wrong role, 404 across tenants and scopes;
   - expired or tampered token rejected;
-  - refresh token reuse revokes the token family;
+  - refresh token reuse after the configured reuse leeway (OpenIddict default 30 s; set
+    explicitly) revokes the token family;
   - lockout after N failures;
   - audit entries written.

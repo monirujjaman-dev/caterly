@@ -5,6 +5,10 @@ paths:
 
 # Observability: Serilog + OpenTelemetry
 
+> **Status:** the patterns below follow ADR-0004 D2 and D4 (hosts, `Caterly.ServiceDefaults`, backends), which is **Proposed**. Until the owner
+> accepts it, they bind designs only. Implementing them (packages, hosts, schemas) waits for
+> acceptance (`design-first.md`). If the owner changes a decision, this rule changes with it.
+
 Design: `docs/architecture/system-architecture.md` §8. All hosts call `AddCaterlyDefaults()`
 (`Caterly.ServiceDefaults`). Do not configure logging, tracing or metrics in individual hosts.
 

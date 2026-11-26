@@ -5,6 +5,10 @@ paths:
 
 # Messaging: RabbitMQ with transactional outbox and inbox
 
+> **Status:** the patterns below follow ADR-0004 D1–D3, which is **Proposed**. Until the owner
+> accepts it, they bind designs only. Implementing them (packages, hosts, schemas) waits for
+> acceptance (`design-first.md`). If the owner changes a decision, this rule changes with it.
+
 Design: `docs/architecture/system-architecture.md` §5, ADR-0004 D1–D3. Library:
 `RabbitMQ.Client` only, behind Application ports. No MassTransit, NServiceBus, Wolverine or
 mediator libraries.

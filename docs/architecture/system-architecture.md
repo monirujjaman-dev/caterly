@@ -121,8 +121,8 @@ call it, so every host gets the same logging, tracing, metrics and health checks
   - `identity`: ASP.NET Core Identity and OpenIddict tables.
 - **Concurrency:** `xmin` optimistic concurrency on contended aggregates. Unique constraints
   for business uniqueness.
-- **Backups:** `pg_basebackup` plus WAL archiving (pgBackRest, MIT) for point-in-time
-  recovery. Restores are tested regularly.
+- **Backups:** pgBackRest (MIT): full and differential backups plus continuous WAL archiving
+  for point-in-time recovery. Restores are tested regularly.
 
 ## 5. Messaging (RabbitMQ)
 - **Topology:**
@@ -131,7 +131,12 @@ call it, so every host gets the same logging, tracing, metrics and health checks
   - Routing key: `<module>.<event>.v<major>` (for example `menus.menu_item_changed.v1`).
   - Each consumer owns one durable **quorum queue**: `caterly.<consumer-module>.<purpose>`.
     It binds only the keys it needs.
-  - Every queue has a dead-letter exchange `caterly.dlx` and a queue `<queue>.dlq`.
+  - Dead-lettering:
+    - every queue has the dead-letter exchange `caterly.dlx` (direct), its own
+      `x-dead-letter-routing-key` = `<queue>`, and a bound queue `<queue>.dlq`;
+    - quorum queues use `x-dead-letter-strategy: at-least-once` with
+      `x-overflow: reject-publish`, so dead-lettered messages are not lost;
+    - `x-delivery-limit` is set explicitly (default 5, not the broker default of 20).
 - **Envelope:** both headers and body carry:
   - `messageId` (UUID v7), `type`, `version`;
   - `tenantId`, `occurredAtUtc`;
@@ -153,17 +158,20 @@ call it, so every host gets the same logging, tracing, metrics and health checks
   `v2` next to `v1` until all consumers have migrated.
 
 ## 6. Caching (Redis)
-- **Engine:** `HybridCache`, with L1 in memory and L2 in Redis through `StackExchange.Redis`.
+- **Engine:** `HybridCache`, with L1 in memory and L2 in Redis through
+  `Microsoft.Extensions.Caching.StackExchangeRedis` (`IDistributedCache` over `StackExchange.Redis`).
   Redis is **never** the source of truth. The system must work correctly, only slower, if
   Redis is down.
 - **Keys:** `caterly:{env}:{tenantId|global}:{module}:{name}:{id}:v{schema}`. Every entry has
   a TTL. Tenant-scoped data always includes the `tenantId` in the key.
-- **Invalidation:** remove the cache entry by tag or key after commit. The outbox event that
-  the write produces also fans the invalidation out to other instances.
+- **Invalidation:** remove the cache entry by tag or key in Redis after commit. `HybridCache`
+  has no L1 backplane, so in-memory L1 entries on other instances expire only on their own.
+  L1 expiry is therefore 30 s or less, and entries that affect access disable L1.
 - **Allowed:**
   - published menus and calendars;
   - service and agreement configuration;
-  - a user's resolved permission scope (short TTL);
+  - a user's resolved permission scope: Redis only (no L1), TTL ≤ 60 s, removed in the
+    revoking request after commit, read from PostgreSQL if Redis is down;
   - lookup data.
 - **Forbidden:**
   - capacity or availability used for acceptance;
@@ -188,7 +196,9 @@ call it, so every host gets the same logging, tracing, metrics and health checks
 - **Claims are minimal:** `sub`, the tenant membership, and the role. Fine-grained permissions
   and the corporate scope (account, permitted locations) are resolved **server-side** for each
   request from PostgreSQL (cached in Redis with a short TTL and invalidated on change). A
-  stale token therefore cannot widen access (CMD-014).
+  stale token therefore cannot widen access (CMD-014). A revocation applies to the next
+  request once its cache entry is removed. In the worst case (the Redis removal fails) it
+  applies within the scope TTL. The owner decides the maximum acceptable delay (§12).
 - **Authorization:** ASP.NET Core policies per permission, plus resource and tenant checks in
   handlers. Out-of-scope resources return 404.
 - **Accounts:** individual accounts only; shared employee logins are not allowed (CMD-020).
@@ -224,8 +234,11 @@ call it, so every host gets the same logging, tracing, metrics and health checks
     command, the outbox, the publish and the consumer.
 - **Custom spans:** one `ActivitySource` named `Caterly.<Module>` for important use cases
   (finalization, imports, billing runs).
-- **Sampling:** parent-based. All traces in development; in production, all errors plus a
-  configured ratio. The Collector does tail sampling.
+- **Sampling:** the application records every trace (parent-based, always on), and the
+  Collector makes the decision. It runs the `otelcol-contrib` distribution with the
+  `tail_sampling` processor, which keeps all traces with errors, all slow traces, and a
+  configured ratio of the rest. Ratio sampling in the application would drop error traces
+  before the Collector sees them, so it is used only as an emergency load valve.
 
 ### Metrics (OpenTelemetry → Prometheus)
 - **Runtime:** ASP.NET Core and .NET runtime metrics (GC, thread pool, exceptions).
@@ -234,8 +247,8 @@ call it, so every host gets the same logging, tracing, metrics and health checks
   - `caterly.finalization.duration`, `caterly.finalization.lag`;
   - `caterly.outbox.pending`, `caterly.outbox.age`;
   - `caterly.consumer.failed{consumer}`.
-- **Labels must have low cardinality:** never user, employee or order IDs. `tenantId` is not
-  a metric label by default.
+- **Labels must have low cardinality:** never user, employee, order or tenant IDs. Per-tenant
+  analysis uses traces and logs, which carry `TenantId`.
 
 ### Health and monitoring
 - **Health checks:** `/health/live` (the process is up) and `/health/ready` (PostgreSQL,
@@ -290,7 +303,11 @@ The full Grafana stack is available as an optional compose profile (`--profile o
 | Telemetry SDK | OpenTelemetry .NET (+ Instrumentation.AspNetCore/Http/Runtime, Exporter.OpenTelemetryProtocol), Npgsql.OpenTelemetry | Apache 2.0 / PostgreSQL |
 | Identity | OpenIddict (AspNetCore, EntityFrameworkCore), ASP.NET Core Identity | Apache 2.0 / MIT |
 | Messaging | RabbitMQ.Client | Apache 2.0 / MPL 2.0 |
-| Cache | StackExchange.Redis, Microsoft.Extensions.Caching.Hybrid | MIT |
+| Cache | Microsoft.Extensions.Caching.Hybrid, Microsoft.Extensions.Caching.StackExchangeRedis, StackExchange.Redis | MIT |
+| Instrumentation | OpenTelemetry.Instrumentation.StackExchangeRedis (**prerelease**: needs owner OK, or omit), RabbitMQ.Client.OpenTelemetry | Apache 2.0 |
+| Data protection keys | Microsoft.AspNetCore.DataProtection.EntityFrameworkCore | MIT |
+| Log masking | Destructurama.Attributed | Apache 2.0 |
+| Test helpers | Microsoft.Extensions.Diagnostics.Testing (`FakeLogger`), Microsoft.Extensions.TimeProvider.Testing | MIT |
 | Health checks | AspNetCore.HealthChecks.NpgSql / Redis / Rabbitmq | Apache 2.0 |
 | Tests | xUnit v3, Testcontainers (PostgreSQL, Redis, RabbitMQ) | Apache 2.0 / MIT |
 | Servers | PostgreSQL, RabbitMQ, Valkey or Redis Open Source, OTel Collector, Prometheus, Grafana, Loki, Tempo, Aspire Dashboard, pgBackRest, Uptime Kuma | OSS (Grafana stack: AGPLv3) |
@@ -300,9 +317,9 @@ The full Grafana stack is available as an optional compose profile (`--profile o
 - MediatR v13+, AutoMapper v15+, FluentAssertions v8+;
 - Duende IdentityServer;
 - Hangfire Pro;
-- Seq beyond its free tier;
+- Seq (its free tier is limited);
 - Application Insights, Datadog, New Relic;
-- the Elastic stack.
+- the Elastic stack (not chosen; its AGPL option exists since 8.16, but it is heavier than Loki).
 
 ## 12. Owner decisions
 1. **ADR-0004 D1–D8.** Recommendation: accept as written.
@@ -315,6 +332,12 @@ The full Grafana stack is available as an optional compose profile (`--profile o
 6. **Sign-in methods:** password only for MVP, or phone OTP? An SMS vendor is not chosen
    (CLAUDE.md).
 7. **Tenant routing** for public storefronts (subdomain, path or custom domain). Not decided.
+8. **Finalization trigger and due time.** CMD-040 does not say when finalization runs. With the
+   Administrator-assignment policy, admins act after cutoff and before finalization. Options:
+   a fixed offset after cutoff, a configured time per service, or a manual trigger with a
+   deadline. The `scheduling.due_work` mechanism supports all three.
+9. **Maximum revocation delay** for permission changes (recommendation: immediate on the
+   next request, at most 60 s if Redis fails; §6–7).
 
 ## 13. Implementation slices (platform)
 | Slice | Content | Risk |

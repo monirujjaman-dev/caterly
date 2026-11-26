@@ -8,7 +8,7 @@ Platform baseline: `docs/architecture/system-architecture.md`.
 | Change | Design required before code |
 |---|---|
 | New module, aggregate, schema or table, API surface, integration event, cache entry, background job, auth flow; anything touching tenancy, money, cutoff/finalization, audit or identity | **Full design** by the `architect` agent in `docs/architecture/<area>.md`. The owner approves it before implementation. |
-| A change inside an existing design: new rule on an existing aggregate, new query on existing data, a bug with a non-obvious cause | **Design note** in the plan or PR, covering problem, root cause or requirement, the options considered, the choice, impact on data, API, events, cache, security and observability, and the test list |
+| A change inside an existing design: new rule on an existing aggregate, a new query handler behind an existing endpoint (a new or changed endpoint is an API change and needs a full design), a bug with a non-obvious cause | **Design note** in the plan or PR, covering problem, root cause or requirement, the options considered, the choice, impact on data, API, events, cache, security and observability, and the test list |
 | Typo, copy change, a fully mechanical refactor, a dependency patch bump | None. Say "no design needed: <reason>" in the plan. |
 
 When in doubt, write the design note.
