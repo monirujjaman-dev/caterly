@@ -1,32 +1,52 @@
 # Agent development workflow
 
-Caterly is developed by four agents in `.claude/agents/`, orchestrated by slash commands in
-`.claude/commands/`. The product owner decides business rules and approves high-risk merges.
+Caterly is developed by eight agents in `.claude/agents/`, orchestrated by slash commands in
+`.claude/commands/`. The product owner decides business rules, accepts ADRs, and approves
+high-risk merges.
 
 ## Roles
 
-| Agent | Does | Never does |
-|---|---|---|
-| `developer` | Understands the task, plans, implements with tests on a feature branch, runs build/tests, commits, pushes, opens/updates the PR | Merge, change requirements, push to `main` |
-| `code-reviewer` | Independent read-only review of the local diff against requirements and standards | Edit code |
-| `pr-reviewer` | Reviews the GitHub PR, posts inline comments and a verdict tied to the head SHA, sets `agent-approved` or `changes-requested` | Edit code, merge |
-| `pr-merger` | Checks the merge gate and squash-merges, then syncs `main` | Merge high-risk PRs without `owner-approved`, bypass checks |
+| Agent | Does | Writes to | Never does |
+|---|---|---|---|
+| `architect` | Domain model, module boundaries, schema, API contracts, security/tenancy, test strategy, implementation slices; drafts Proposed ADRs | `docs/architecture/`, `docs/adr/` | Write app code, accept its own ADRs, invent policy |
+| `ui-ux-designer` | User flows, screen inventory, wireframes, component states, copy, accessibility; maintains the design system | `docs/ux/` | Write app code, decide business rules |
+| `backend-developer` | Domain, application use cases, EF Core persistence/migrations, API endpoints, backend tests | `backend/` | Change `web/`, merge |
+| `frontend-developer` | Responsive, accessible React screens from the UX spec and API contract, web tests | `web/` | Put business rules in the UI, add frameworks without an ADR, merge |
+| `developer` | Generalist for small cross-stack fixes that need no design or UX work; shared workflow rules used by all implementers | any code | Merge, change requirements, push to `main` |
+| `code-reviewer` | Independent read-only review of the local diff against requirements and standards | — | Edit code |
+| `pr-reviewer` | Reviews the GitHub PR, posts inline comments and a verdict tied to the head SHA, sets `agent-approved` or `changes-requested` | PR comments/labels | Edit code, merge |
+| `pr-merger` | Checks the merge gate and squash-merges, then syncs `main` | — | Merge high-risk PRs without `owner-approved`, bypass checks |
+
+## Routing
+
+| The task involves… | Stages |
+|---|---|
+| New module/entity/schema, new or changed API, cross-module flow, integration, tenancy, money, cutoff/finalization, audit | `architect` first (owner approves the design) |
+| A new screen, flow, or significant UI change | `ui-ux-designer` before `frontend-developer` |
+| Backend code | `backend-developer` |
+| Web code | `frontend-developer` (same branch/PR as the backend part of the feature) |
+| Small fix, no design/UX need | `developer` |
+| Always | `code-reviewer` → `pr-reviewer` → CI → `pr-merger` |
 
 ## Pipeline (`/ship`)
 
 ```
 task/issue
-  → developer: understand → plan (stop & ask on open business rules)
-  → developer: implement + tests on branch → build/test green → commit → push → draft PR
-  → code-reviewer: findings
-  → developer: fix (max 3 rounds; then stop and report)
+  → triage (routing table)
+  → architect: design + owner decisions ──→ owner approves      (if needed)
+  → ui-ux-designer: UX spec                                      (if UI)
+  → backend-developer: implement + tests → draft PR              (if backend)
+  → frontend-developer: implement + tests on the same branch     (if web)
+  → code-reviewer: findings → owning agent fixes (max 3 rounds)
   → PR marked ready
-  → pr-reviewer: review on GitHub  ── changes requested ──→ developer fixes → re-review
+  → pr-reviewer: review on GitHub ── changes requested ──→ owning agent fixes → re-review
   → CI green
   → pr-merger: gate check
        low risk  → squash-merge
        high risk → label `needs-owner-approval`, stop, notify the owner
 ```
+
+Large features follow the architect's implementation slices: one PR per slice.
 
 The owner resumes a high-risk PR by reviewing it, adding `owner-approved`, and running
 `/merge-pr <n>` (or merging manually).

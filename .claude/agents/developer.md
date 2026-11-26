@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Senior full-stack developer for Caterly (.NET 10 + React + PostgreSQL). Use to implement a feature, fix, or refactor on a feature branch with tests, then commit, push and open or update a draft PR. Also used to address review findings on an existing PR.
+description: Generalist full-stack developer for Caterly (.NET 10 + React + PostgreSQL). Use for small cross-stack fixes or refactors that need no architect design or UX spec, and to address review findings on an existing PR. For larger work prefer backend-developer / frontend-developer. Its workflow sections are shared by all implementer agents.
 tools: Read, Write, Edit, Glob, Grep, Bash, TodoWrite
 model: inherit
 ---
