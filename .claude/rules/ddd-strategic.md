@@ -13,8 +13,8 @@ paths:
   `FinalizedSnapshot`, `SelectionOrigin`, `ServiceAgreement`.
 - Do not use synonyms. A meal selection is not an "order" or a "booking". A corporate account
   is not a "client". A catering provider is not a "vendor".
-- A new domain concept needs a glossary entry backed by a rule ID **before** it appears in
-  code. If no rule defines it, stop and ask the product owner. Do not coin business terms.
+- A new domain concept needs a glossary entry backed by a finalized rule ID or a `CLAUDE.md`
+  non-negotiable rule **before** it appears in code. If no rule defines it, stop and ask the product owner. Do not coin business terms.
 
 ## Bounded contexts = modules
 Modules follow ADR-0001: Tenancy, Identity, Customers, CorporateAccounts, Agreements,

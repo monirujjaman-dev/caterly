@@ -1,7 +1,7 @@
 # Ubiquitous language
 
-Status: living glossary. Every term comes from a finalized rule (`CMD-…`) or from
-`CLAUDE.md`. Terms are used exactly as written here in code (PascalCase), APIs (camelCase), UI
+Status: living glossary. Every term comes from a finalized rule (`CMD-…`) or from the
+non-negotiable domain rules in `CLAUDE.md`. Terms are used exactly as written here in code (PascalCase), APIs (camelCase), UI
 copy and docs. Adding or changing a term needs a rule reference. Terms from draft specs stay
 out until those specs are approved.
 
@@ -26,7 +26,7 @@ out until those specs are approved.
 | Availability / capacity | Menus | Quantity control per published item. | CMD-024, CMD-054 |
 | Meal selection (`MealSelection`) | MealSelection | An employee's chosen item for a service date + meal period. Not "order" or "booking". | CMD-027, CMD-028 |
 | Selection origin (`SelectionOrigin`) | MealSelection | `Employee`, `Administrator` or `Automatic` (policy-assigned). | CMD-015, §3.7 |
-| Cutoff (`Cutoff`) | MealSelection | The instant after which normal employee changes stop. Configurable per service, date and meal period. | CMD-036, CMD-038 |
+| Cutoff (`Cutoff`) | MealSelection | The configured instant at which normal employee changes stop; a change at or after it is rejected. Configurable per service, date and meal period. | CMD-036, CMD-038 |
 | Override (`SelectionOverride`) | MealSelection | An authorized post-cutoff change with actor, timestamp, reason, previous and new value. | CMD-032, CMD-033 |
 | No-selection policy (`NoSelectionPolicy`) | Agreements | `NoMeal` (default), `DefaultMeal` or `AdministratorAssignment`. | §3.7 |
 | Finalization / finalized snapshot (`FinalizedSnapshot`) | MealSelection | An immutable record of the selections and policy-assigned meals for a service date + meal period. | CMD-040, CMD-042 |
@@ -38,5 +38,9 @@ out until those specs are approved.
 | Billable amount | Billing | What each party (company, employee) is billed. Stored separately per party. | §3.8 |
 | Billing basis | Agreements / Billing | The quantity that is billed. Default: finalized quantity. | CMD-044, CMD-045 |
 | Quantities | Kitchen / Delivery / Billing | Selected, finalized, planned, prepared, dispatched, delivered and billed are **distinct** values. | CMD-046, CLAUDE.md |
-| Invoice (`Invoice`) | Billing | A corporate bill for a billing period. Immutable once issued. | CMD-048 |
+| Invoice (`Invoice`) | Billing | A corporate bill for a billing period. Immutable once issued; corrections are credit/debit records. | CMD-048, CMD-009, §3.8, CLAUDE.md |
+| Order (`Order`) | Orders | A regular customer's order (guest or registered). Not a meal selection. | CLAUDE.md |
+| Order status / payment status | Orders / Payments | Two independent statuses; creating an order never means it is paid. | CLAUDE.md |
+| Refund / reversal | Payments | A new record that corrects a completed payment; payments are never overwritten. | CLAUDE.md |
+| Audit entry (`AuditEntry`) | Audit | Actor, action, entity, UTC timestamp, old/new values, reason where required. | CLAUDE.md, CMD-015, CMD-033 |
 | Dispute (`InvoiceDispute`) | Billing | The disputed amount, reason, owner and resolution history. | CMD-050 |

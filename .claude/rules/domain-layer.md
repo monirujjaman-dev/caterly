@@ -39,7 +39,8 @@ Npgsql. `DomainAssemblyTests` enforces this; never weaken that test.
 
 ## Errors
 - Expected business-rule failures return a `Result`/`Result<T>` carrying a `DomainError`
-  with a stable code `<module>.<rule>`, e.g. `selection.cutoff_passed`,
+  with a stable code `<prefix>.<rule>`, where the prefix is a short, fixed name per module
+  (MealSelection → `selection`), e.g. `selection.cutoff_passed`,
   `selection.employee_not_eligible`. Tests assert on the code.
 - Exceptions are only for programmer errors (null arguments, impossible states).
 

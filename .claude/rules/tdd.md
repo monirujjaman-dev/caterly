@@ -20,7 +20,7 @@ All production code in `backend/src/` and `web/src/` is written test-first. Foll
 - Tests assert **business outcomes** (state, returned error code, emitted record), not
   implementation details (private calls, call counts on internal collaborators).
 - Name tests as behavior sentences in the domain language:
-  `Selection_after_cutoff_is_rejected_for_employee`, not `Test1` or `SelectAsync_Works`.
+  `Change_exactly_at_cutoff_is_rejected_for_employee`, not `Test1` or `SelectAsync_Works`.
 - Tag backend tests with the rule they prove: `[Trait("Rule", "CMD-038")]`.
 - Never weaken, skip or delete a failing test to get green. If a test is wrong, say why in the
   commit message.

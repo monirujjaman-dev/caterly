@@ -23,8 +23,8 @@ paths:
   results look the same, so the API returns 404 for both (IDOR protection).
 - Queries (read side) may project straight to DTOs through a read port. They bypass
   aggregates but **never** bypass tenant and scope filters. Collections are paginated.
-- Commands that create or submit something accept an idempotency key (selections, orders,
-  payment callbacks).
+- Selection and order submissions and payment callbacks accept an idempotency key
+  (CLAUDE.md). Other commands need one only if the design says so.
 - Every async method takes a `CancellationToken`.
 - Tests (`tests/Caterly.Application.UnitTests`, created with the first use case): written
   first; use hand-written in-memory fakes for ports (no mocking library without a stated

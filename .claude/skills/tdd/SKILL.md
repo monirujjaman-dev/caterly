@@ -71,7 +71,7 @@ Add this section to the PR body:
 ## TDD evidence
 | Rule | Test | Red reason observed |
 |---|---|---|
-| CMD-038 | `MealSelectionTests.Selection_exactly_at_cutoff_is_rejected_for_employee` | Expected error `selection.cutoff_passed`, got success |
+| CMD-038 | `MealSelectionTests.Change_exactly_at_cutoff_is_rejected_for_employee` | Expected error `selection.cutoff_passed`, got success |
 ```
 List any exempt files (configuration or scaffolding) and why.
 
