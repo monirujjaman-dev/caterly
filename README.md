@@ -8,6 +8,16 @@ customer ordering), initial market Bangladesh.
 - Git workflow: [`docs/engineering/git-workflow.md`](docs/engineering/git-workflow.md)
 - Agent workflow (developer → code review → PR review → merge): [`docs/engineering/agent-workflow.md`](docs/engineering/agent-workflow.md)
 - Agent instructions: [`CLAUDE.md`](CLAUDE.md)
+- Build, test and run commands: [`docs/engineering/commands.md`](docs/engineering/commands.md)
+
+## Getting started
+
+Prerequisites: .NET SDK 10.0.x, Node.js 22 (>= 22.22.2) or later.
+
+```
+cd backend && dotnet restore && dotnet test        # API: dotnet run --project src/Caterly.Api
+cd web && npm ci && npm test -- --run              # dev server: npm run dev
+```
 
 ## Working with Claude Code
 
