@@ -33,7 +33,7 @@ schema. Agents never run `dotnet ef database update` against a non-local databas
 
 ## Web — working dir `web/`
 
-Vite + React + TypeScript (strict). Node 22 (`>=22.22.2`) or later.
+Vite + React + TypeScript (strict). Node `^22.22.2 || ^24.15.0 || >=26.0.0` (minimum pinned in `web/.nvmrc`).
 
 | Purpose | Command |
 |---|---|

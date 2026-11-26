@@ -12,7 +12,7 @@ customer ordering), initial market Bangladesh.
 
 ## Getting started
 
-Prerequisites: .NET SDK 10.0.x, Node.js 22 (>= 22.22.2) or later.
+Prerequisites: .NET SDK 10.0.x, Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` (see `web/.nvmrc`).
 
 ```
 cd backend && dotnet restore && dotnet test        # API: dotnet run --project src/Caterly.Api
