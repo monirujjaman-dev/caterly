@@ -383,7 +383,7 @@ share as separate labeled figures. Always show the values the server returns.
   (#14532d) for its hover state.
 - **Do** pair every status color with a text label, and add an icon where space allows.
 - **Do** use tabular numerals for every amount, quantity and time.
-- **Do** show cutoffs as absolute local times in `Asia/Dhaka` unless the service says otherwise.
+- **Do** show cutoffs as absolute local times in Asia/Dhaka unless the service says otherwise.
 - **Do** keep touch targets at least 44 px and input text at least 16 px.
 - **Do** use the inverse logo on green or dark surfaces, keep ¼-width clear space around the mark,
   and never show it smaller than 24 px.
