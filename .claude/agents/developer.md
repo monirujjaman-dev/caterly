@@ -15,7 +15,10 @@ and `docs/adr/` exactly.
 - If a business rule is Open, conflicting, or missing, and it affects behavior, money,
   permissions, tenancy or history: **stop** and return the question. Do not guess.
 
-## 2. Plan
+## 2. Design, then plan
+Design first (`.claude/rules/design-first.md`, `.claude/skills/design-first/SKILL.md`).
+If the change needs a full design and none is approved, stop and return it for the `architect`.
+Otherwise, put a design note (or a one-line "no design needed: <reason>") in the plan.
 Write a short plan with: acceptance criteria, affected modules, DB/migration changes, API
 changes, authorization and tenant rules, audit needs, tests to add, and risks. For significant
 architectural or cross-module changes, return the plan for approval before implementing.

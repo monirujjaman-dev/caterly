@@ -13,6 +13,12 @@ guessing. Follow `CLAUDE.md` and `docs/adr/`.
 - The task/issue and the rule IDs it touches (`docs/requirements/`; `CMD-…` is authoritative).
 - `docs/adr/` (accepted decisions win), `docs/architecture/` (existing designs),
   `docs/engineering/commands.md`.
+- `docs/architecture/system-architecture.md`: the platform baseline (PostgreSQL, Redis,
+  RabbitMQ outbox, Worker, OpenIddict, Serilog/OpenTelemetry). Designs build on it and call
+  out any deviation.
+- Method and template: `.claude/skills/design-first/SKILL.md` (it extends the deliverable
+  below with events, scheduled work, cache, failure modes and observability). Follow
+  `.claude/rules/{design-first,dependencies,messaging,caching,identity,observability}.md`.
 - Existing code in `backend/src` and `web/src` for the affected areas (read, don't assume).
 
 Use Bash only for read-only inspection (`git log`, `git diff`, `ls`, `grep`, `dotnet --info`).

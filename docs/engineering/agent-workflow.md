@@ -28,22 +28,29 @@ high-risk merges.
 | Small fix, no design/UX need | `developer` |
 | Always | `code-reviewer` → `pr-reviewer` → CI → `pr-merger` |
 
-## Development method: DDD + TDD
+## Development method: design first, DDD + TDD
 
-All implementation is domain-driven and test-first. The agent-loaded guidance lives in
+All implementation starts from a system design (full design or design note), then is
+domain-driven and test-first. The agent-loaded guidance lives in
 `.claude/`. Agents read it by path.
 
 | Kind | File | Loaded |
 |---|---|---|
+| Rule | `.claude/rules/design-first.md` (full design vs design note) | Always |
+| Rule | `.claude/rules/dependencies.md` (free/OSS only, license check) | Always |
 | Rule | `.claude/rules/tdd.md` | Always |
+| Rule | `.claude/rules/observability.md`, `messaging.md`, `caching.md` | `backend/**` |
+| Rule | `.claude/rules/identity.md` | `backend/**`, `web/src/**` |
 | Rule | `.claude/rules/ddd-strategic.md` (language, bounded contexts, layout) | `backend/**`, `docs/architecture/**`, `docs/adr/**` |
 | Rule | `.claude/rules/domain-layer.md`, `application-layer.md`, `infrastructure-layer.md`, `api-layer.md` | That layer's source and tests |
 | Rule | `.claude/rules/web.md` | `web/**` |
+| Skill | `.claude/skills/design-first/` | System design procedure, full design and design-note templates |
 | Skill | `.claude/skills/tdd/` | Red → green → refactor procedure and PR evidence |
 | Skill | `.claude/skills/domain-model/` | Rule IDs → language, context, aggregates, errors, test list |
 | Skill | `.claude/skills/add-use-case/` | Inside-out backend slice: domain → handler → persistence → endpoint |
 | Skill | `.claude/skills/ef-migration/` | Safe migration generation and SQL review |
 | Glossary | `docs/architecture/ubiquitous-language.md` | Terms used in code, API, UI |
+| Baseline | `docs/architecture/system-architecture.md` | Platform architecture every design builds on |
 
 Reviewers treat a behavior change without a test that fails without it as **major**.
 

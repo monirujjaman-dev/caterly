@@ -48,8 +48,13 @@ integration, payment gateway, SMS/email vendor, tax/VAT treatment, native-app ro
 
 ## Tech stack and layout
 
-See `docs/adr/0001-tech-stack.md`. Summary: .NET 10 (ASP.NET Core, EF Core + Npgsql),
-PostgreSQL, React + TypeScript web, responsive (no native apps for MVP).
+See `docs/adr/0001-tech-stack.md` and `docs/adr/0003-platform-infrastructure-stack.md`. Summary:
+.NET 10 (ASP.NET Core, EF Core + Npgsql), PostgreSQL (system of record), Redis (cache only),
+RabbitMQ (integration events through a transactional outbox), Serilog + OpenTelemetry
+(structured logs, traces, metrics) with a self-hosted monitoring stack, OAuth 2.0/OIDC with
+OpenIddict, React + TypeScript web, responsive (no native apps for MVP). **Only free,
+open-source tools and packages** (`.claude/rules/dependencies.md`). Platform design:
+`docs/architecture/system-architecture.md`.
 
 ```
 backend/   Caterly.slnx, src/Caterly.{Domain,Application,Infrastructure,Api}, tests/
@@ -58,15 +63,19 @@ docs/      requirements/, adr/, engineering/, architecture/ (architect designs),
 ```
 
 Until code exists, the first feature PR that scaffolds a project must follow the ADR and keep it
-minimal. Do not add frameworks, message buses, CQRS libraries, microservices or event sourcing
-without an ADR approved by the product owner.
+minimal. Do not add frameworks, other message buses, CQRS/mediator libraries, microservices or
+event sourcing without an ADR approved by the product owner.
 
 Engineering rules: thin endpoints; business rules in Domain/Application; validate every request;
 centralized error handling with ProblemDetails; pagination on collections; `CancellationToken`
 on async paths; OpenAPI; EF migrations for every schema change, never destructive without
 approval; no secrets in code; no logging of passwords, tokens or payment data; avoid N+1.
 
-## Development method: DDD + TDD (mandatory)
+## Development method: design first, then DDD + TDD (mandatory)
+
+- **Design first:** before implementing a feature or solving a non-trivial problem, produce a
+  full design (architect, owner-approved) or a design note, per `.claude/rules/design-first.md`.
+  Skill: `/design-first`.
 
 - **TDD:** test list from rule IDs, then red → green → refactor, one behavior at a time. Bug
   fixes start with a failing reproduction test. No production behavior without a test that
