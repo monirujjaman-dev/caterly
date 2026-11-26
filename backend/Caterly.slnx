@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Caterly.Api/Caterly.Api.csproj" />
+    <Project Path="src/Caterly.Application/Caterly.Application.csproj" />
+    <Project Path="src/Caterly.Domain/Caterly.Domain.csproj" />
+    <Project Path="src/Caterly.Infrastructure/Caterly.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Caterly.Api.IntegrationTests/Caterly.Api.IntegrationTests.csproj" />
+    <Project Path="tests/Caterly.Domain.UnitTests/Caterly.Domain.UnitTests.csproj" />
+  </Folder>
+</Solution>
